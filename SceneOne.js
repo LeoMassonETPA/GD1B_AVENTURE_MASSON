@@ -104,7 +104,7 @@ class SceneOne extends Phaser.Scene{
         this.load.image('Sol','assets/Sol.png');
         this.load.image('passage','assets/passage.png');
         this.load.image('obstacle1','assets/obstacle1.png');
-        this.load.image('blocDangereux','assets/obstacleD.png');
+        this.load.image('blocDangereux','assets/ObstacleD.png');
         this.load.image('plateformeOuverturePorte','assets/plateforme.png');
         this.load.image('plateformePiece','assets/platformePiece.png');
         this.load.image('plateformeVictoire','assets/plateformeVictoire.png');

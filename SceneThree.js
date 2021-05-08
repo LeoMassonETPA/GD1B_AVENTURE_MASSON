@@ -76,8 +76,8 @@ class SceneThree extends Phaser.Scene{
         // Ennemis //
         this.load.image('ennemi1','assets/ennemi.png');
         this.load.image('scie','assets/scie.png');
-		this.load.image('killG','assets/blocKillInstantG.png');
-        this.load.image('killD','assets/blocKillInstantD.png');
+		this.load.image('killG','assets/BlocKillInstantG.png');
+        this.load.image('killD','assets/BlocKillInstantD.png');
     }
     
     create(){

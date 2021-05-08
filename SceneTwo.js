@@ -40,7 +40,7 @@ class SceneTwo extends Phaser.Scene{
         this.load.image('Sol','assets/Sol.png');
         this.load.image('passage','assets/passage.png');
         this.load.image('obstacle1','assets/obstacle1.png');
-        this.load.image('blocDangereux','assets/obstacleD.png');
+        this.load.image('blocDangereux','assets/ObstacleD.png');
         this.load.image('plateformeOuverturePorte','assets/plateforme.png');
         
         
