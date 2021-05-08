@@ -304,8 +304,7 @@ class SceneThree extends Phaser.Scene{
         this.physics.add.overlap(player,kill2, KillInstant, null, this);
         this.physics.add.overlap(player,kill3, KillInstant, null, this);
         this.physics.add.overlap(player,kill4, KillInstant, null, this);
-        this.physics.add.overlap(player,kill5, KillInstant, null, this);
-        this.physics.add.overlap(player,kill6, KillInstant, null, this);
+    
         /*  this.tweens.add({
             targets: tir,
                 props: {

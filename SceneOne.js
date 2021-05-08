@@ -140,8 +140,8 @@ class SceneOne extends Phaser.Scene{
         // Ennemis //
         this.load.image('ennemi1','assets/ennemi.png');
         this.load.image('scie','assets/scie.png');
-        this.load.image('kill','assets/blocKillInstantG.png');
-        this.load.image('kill','assets/blocKillInstantD.png');
+        this.load.image('kill1','assets/blocKillInstantG.png');
+        this.load.image('kill2','assets/blocKillInstantD.png');
     }
     
     create(){
