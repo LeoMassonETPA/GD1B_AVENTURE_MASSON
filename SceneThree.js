@@ -6,7 +6,7 @@ class SceneThree extends Phaser.Scene{
         super("SceneThree");
     }
     init(data){
-        //this.pdv = data.pdv
+      
         
     }
     preload(){
@@ -27,14 +27,16 @@ class SceneThree extends Phaser.Scene{
         
         // HUD //
         this.load.image('pdv','assets/coeur.png');
+		this.load.image('pdv0','assets/Tete0PV.png');
+        this.load.image('pdv1','assets/Tete1PV.png');
+        this.load.image('pdv2','assets/Tete2PV.png');
+        this.load.image('pdv3','assets/Tete3PV.png');
         this.load.image('x0','assets/x0.png');
         this.load.image('x1','assets/x1.png');
         this.load.image('x2','assets/x2.png');
         this.load.image('x3','assets/x3.png');
         this.load.image('dashTrue','assets/DashTrue.png');
-        this.load.image('dashFalse','assets/DashFalse.png');
         this.load.image('shotTrue','assets/ShotTrue.png');
-        this.load.image('shotFalse','assets/ShotFalse.png');
 		
 		this.load.image('victory','assets/EcranVictoire.png');
         this.load.image('defeat','assets/EcranGameOver.png');
@@ -54,6 +56,8 @@ class SceneThree extends Phaser.Scene{
         // Ennemis //
         this.load.image('ennemi1','assets/ennemi.png');
         this.load.image('scie','assets/scie.png');
+		
+		// Ennemis de la scene 3 //
 		this.load.image('killG','assets/BlocKillInstantG.png');
         this.load.image('killD','assets/BlocKillInstantD.png');
     }
@@ -80,8 +84,7 @@ class SceneThree extends Phaser.Scene{
         kill2 = this.physics.add.group();
         kill3 = this.physics.add.group();
         kill4 = this.physics.add.group();
-        kill5 = this.physics.add.group();
-        kill6 = this.physics.add.group();
+  
         mur = this.physics.add.staticGroup();
         coeurCollectible= this.physics.add.staticGroup();
         blocDangereux = this.physics.add.staticGroup();
@@ -154,12 +157,11 @@ class SceneThree extends Phaser.Scene{
 		plateformeVictoire.create (960, 2200, 'plateformeVictoire');
         
        
-       // trouH.create(500,1200, 'trouH');
-       // trouV.create(500,700, 'trouV');
-        
-        PDV1 = this.add.sprite(100,100, 'pdv').setScrollFactor(0).setAlpha(1);   
-        PDV2 = this.add.sprite(200,100, 'pdv').setScrollFactor(0).setAlpha(1);   
-        PDV3 = this.add.sprite(300,100, 'pdv').setScrollFactor(0).setAlpha(1);   
+      
+        PDV0 = this.add.sprite(300,100, 'pdv0').setScrollFactor(0).setAlpha(0);   
+        PDV1 = this.add.sprite(300,100, 'pdv1').setScrollFactor(0).setAlpha(0);   
+        PDV2 = this.add.sprite(300,100, 'pdv2').setScrollFactor(0).setAlpha(0);   
+        PDV3 = this.add.sprite(300,100, 'pdv3').setScrollFactor(0).setAlpha(0);      
         
         x0C = this.add.sprite(500,100, 'x0').setScrollFactor(0).setAlpha(1);
         x1C = this.add.sprite(500,100, 'x1').setScrollFactor(0).setAlpha(0);
@@ -173,9 +175,7 @@ class SceneThree extends Phaser.Scene{
         affichageClef = this.add.sprite(400,100, 'clef').setScrollFactor(0).setAlpha(1);
         affichagePiece = this.add.sprite(600,100, 'piece').setScrollFactor(0).setAlpha(1);
         
-        imageDashFalse = this.add.sprite(1730,100, 'dashFalse').setScrollFactor(0).setAlpha(1);
         imageDashTrue = this.add.sprite(1730,100, 'dashTrue').setScrollFactor(0).setAlpha(0);
-        imageShotFalse = this.add.sprite(1500,100, 'shotFalse').setScrollFactor(0).setAlpha(1);
         imageShotTrue = this.add.sprite(1500,100, 'shotTrue').setScrollFactor(0).setAlpha(0);
 		
 		
@@ -203,28 +203,7 @@ class SceneThree extends Phaser.Scene{
         
        
         
-       /* blocDangereux.create(975, 200, 'blocDangereux');
-        blocDangereux.create(1425, 200, 'blocDangereux');
-        blocDangereux.create(525, 200, 'blocDangereux');
-        
-        tir = this.physics.add.image(975 , 300, 'tir');
-        tir.setCollideWorldBounds(true);
-        tir.body.setAllowGravity(false);
-        this.physics.add.overlap(player, tir, HitTir, null, this);
-        
-        tir2 = this.physics.add.image(1425 , 300, 'tir');
-        tir2.setCollideWorldBounds(true);
-        tir2.body.setAllowGravity(false);
-        this.physics.add.overlap(player, tir2, HitTir, null, this);
-        
-        tir3 = this.physics.add.image(525 , 300, 'tir');
-        tir3.setCollideWorldBounds(true);
-        tir3.body.setAllowGravity(false);
-        this.physics.add.overlap(player, tir3, HitTir, null, this); */
-        
-       // ennemi = this.physics.add.image(448 , 1033, 'ennemi1');
-        //ennemi.setCollideWorldBounds(true);
-        //ennemi.body.setAllowGravity(false); 
+      
         kill1 = this.physics.add.image(750, 850, 'killG');
 		kill1.setCollideWorldBounds(true);
 		kill1.body.setAllowGravity(false);
@@ -279,60 +258,6 @@ class SceneThree extends Phaser.Scene{
         this.physics.add.overlap(player,kill3, KillInstant, null, this);
         this.physics.add.overlap(player,kill4, KillInstant, null, this);
     
-        /*  this.tweens.add({
-            targets: tir,
-                props: {
-                y: { value: 700, duration: 1000 },
-            },
-            yoyo: false,
-                repeat: -1
-        });
-        this.tweens.add({
-            targets: tir2,
-                props: {
-                y: { value: 700, duration: 1000 },
-            },
-            yoyo: false,
-                repeat: -1
-        });
-        this.tweens.add({
-            targets: tir3,
-                props: {
-                y: { value: 700, duration: 1000 },
-            },
-            yoyo: false,
-                repeat: -1
-        });
-
-        scie = this.physics.add.image(200 , 650, 'scie');
-        scie.setCollideWorldBounds(true);
-        scie.body.setAllowGravity(false);
-        this.physics.add.overlap(player, scie, HitTir, null, this);
-        
-        scie2 = this.physics.add.image(1725 , 650, 'scie');
-        scie2.setCollideWorldBounds(true);
-        scie2.body.setAllowGravity(false);
-        this.physics.add.overlap(player, scie2, HitTir, null, this);
-        
-        this.tweens.add({
-            targets: scie,
-                props: {
-                x: { value: 500, duration: 1000 },
-                y: { value: 950, duration: 1000 },
-            },
-            yoyo: true,
-                repeat: -1
-             });
-        
-        this.tweens.add({
-            targets: scie2,
-                props: {
-                
-                y: { value: 350, duration: 1000 },
-            },
-            yoyo: true,
-                repeat: -1
-             }); */
          tirJoueur = this.physics.add.group();    
         this.physics.add.overlap(tirJoueur,ennemi, degatEnnemi, null, this);    
         
@@ -412,24 +337,28 @@ class SceneThree extends Phaser.Scene{
                 pdv -=1;   
         if (pdv == 3){
             PDV3.setAlpha(1);
-            PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
-       }
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
         if (pdv == 2){
             PDV3.setAlpha(0);
             PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
         if (pdv == 1){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
         if (pdv == 0){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
             gameOver = true;
         }
             }
@@ -573,26 +502,30 @@ class SceneThree extends Phaser.Scene{
           
         
       
-       if (pdv == 3){
+      if (pdv == 3){
             PDV3.setAlpha(1);
-            PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
-       }
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
         if (pdv == 2){
             PDV3.setAlpha(0);
             PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
         if (pdv == 1){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
         if (pdv == 0){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
             gameOver = true;
         }
         
@@ -655,7 +588,6 @@ class SceneThree extends Phaser.Scene{
         }
         
         if (canShot == true){
-            imageShotFalse.setAlpha(0);
             imageShotTrue.setAlpha(1);
         }
         
@@ -664,7 +596,6 @@ class SceneThree extends Phaser.Scene{
         }
 		
 		if (canDash == true){
-			 imageDashFalse.setAlpha(0);
             imageDashTrue.setAlpha(1);
 		}
          
@@ -741,26 +672,30 @@ class SceneThree extends Phaser.Scene{
             pdv +=1;
             coeurCollectible.destroy()
             if (pdv == 3){
-                PDV3.setAlpha(1);
-                PDV2.setAlpha(1);
-                PDV1.setAlpha(1);
-       }
+            PDV3.setAlpha(1);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
-            if (pdv == 2){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(1);
-                PDV1.setAlpha(1);
+        if (pdv == 2){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
-            if (pdv == 1){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(0);
-                PDV1.setAlpha(1);
+        if (pdv == 1){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
-            if (pdv == 0){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(0);
-                PDV1.setAlpha(0);
-                gameOver = true;
+        if (pdv == 0){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
+            gameOver = true;
         }
             }
      

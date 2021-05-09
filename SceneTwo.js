@@ -7,7 +7,7 @@ class SceneTwo extends Phaser.Scene{
         super("SceneTwo");
     }
     init(data){
-        //this.pdv = data.pdv
+  
         
     }
     preload(){
@@ -38,9 +38,9 @@ class SceneTwo extends Phaser.Scene{
         this.load.image('x2','assets/x2.png');
         this.load.image('x3','assets/x3.png');
         this.load.image('dashTrue','assets/DashTrue.png');
-        this.load.image('dashFalse','assets/DashFalse.png');
+     
         this.load.image('shotTrue','assets/ShotTrue.png');
-        this.load.image('shotFalse','assets/ShotFalse.png');
+    
 		
 		this.load.image('victory','assets/EcranVictoire.png');
         this.load.image('defeat','assets/EcranGameOver.png');
@@ -68,14 +68,11 @@ class SceneTwo extends Phaser.Scene{
         
         this.add.image(0, 0, 'background').setOrigin(0);        
         
-        mur = this.physics.add.staticGroup();
-       
+        
+       	// Plateforme qui ne s'active que quand le joueur possède une clef //
         plateformeOuverturePorte = this.physics.add.staticGroup();
-        
-        
-
- 
-       
+		
+		
         mur = this.physics.add.staticGroup();
         coeurCollectible= this.physics.add.staticGroup();
         blocDangereux = this.physics.add.staticGroup();
@@ -86,6 +83,8 @@ class SceneTwo extends Phaser.Scene{
         ennemi = this.physics.add.group();
         itemclef = this.physics.add.staticGroup();
         itempiece = this.physics.add.staticGroup();
+		
+		
         // murs haut
         
         mur.create(225,150, 'Mur');
@@ -106,8 +105,12 @@ class SceneTwo extends Phaser.Scene{
         mur.create(525,1350, 'Mur');
         mur.create(675,1350, 'Mur');
         mur.create(825,1350, 'Mur');
+		
+		// Mur qui se détruit lors d'un evenement //
         murDestructible=this.physics.add.sprite(975,1350, 'Mur');
         murDestructible.body.immovable=true;
+		
+		
         mur.create(1125,1350, 'Mur');
         mur.create(1275,1350, 'Mur');
         mur.create(1425,1350, 'Mur');
@@ -146,8 +149,7 @@ class SceneTwo extends Phaser.Scene{
         
         plateformeOuverturePorte.create(225, 1125, 'plateformeOuverturePorte');
         
-       // trouH.create(500,1200, 'trouH');
-       // trouV.create(500,700, 'trouV');
+
         
          PDV0 = this.add.sprite(300,100, 'pdv0').setScrollFactor(0).setAlpha(0);   
         PDV1 = this.add.sprite(300,100, 'pdv1').setScrollFactor(0).setAlpha(0);   
@@ -166,9 +168,9 @@ class SceneTwo extends Phaser.Scene{
         affichageClef = this.add.sprite(400,100, 'clef').setScrollFactor(0).setAlpha(1);
         affichagePiece = this.add.sprite(600,100, 'piece').setScrollFactor(0).setAlpha(1);
         
-        imageDashFalse = this.add.sprite(1730,100, 'dashFalse').setScrollFactor(0).setAlpha(1);
+        
         imageDashTrue = this.add.sprite(1730,100, 'dashTrue').setScrollFactor(0).setAlpha(0);
-        imageShotFalse = this.add.sprite(1500,100, 'shotFalse').setScrollFactor(0).setAlpha(1);
+       
         imageShotTrue = this.add.sprite(1500,100, 'shotTrue').setScrollFactor(0).setAlpha(0);
 		
 		
@@ -235,6 +237,9 @@ class SceneTwo extends Phaser.Scene{
                 repeat: -1
         });
 
+		
+		// Ennemis du meme types que ceux de la scene 1 //
+		
         scie = this.physics.add.image(200 , 650, 'scie');
         scie.setCollideWorldBounds(true);
         scie.body.setAllowGravity(false);
@@ -265,9 +270,10 @@ class SceneTwo extends Phaser.Scene{
                 repeat: -1
              });
         
-         tirJoueur = this.physics.add.group();    
+        tirJoueur = this.physics.add.group();    
         this.physics.add.overlap(tirJoueur,ennemi, degatEnnemi, null, this);    
         
+		
         
         this.anims.create({
         key: 'left',
@@ -365,7 +371,7 @@ class SceneTwo extends Phaser.Scene{
         }
         
         function changementZone(){
-            this.scene.start("SceneThree"/*, {pdv: this.pdv}*/); 
+            this.scene.start("SceneThree"); 
          }
         
    
@@ -566,7 +572,6 @@ class SceneTwo extends Phaser.Scene{
         }
         
         if (canShot == true){
-            imageShotFalse.setAlpha(0);
             imageShotTrue.setAlpha(1);
         }
          

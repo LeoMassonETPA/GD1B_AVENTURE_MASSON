@@ -1,3 +1,10 @@
+// Les controles se font avec les touche directionelles, le tir s'effectue en se déplaçant et en appuyant sur la touche ESPACE, idem pour le dash mais avec SHIFT //
+// J'ai commenté ce que je pouvais sur la scene 1 et ce qu'il y a de nouveau sur la scène 2 et 3 //
+
+
+
+
+
 // var décor //
 
 var trouH;
@@ -8,41 +15,68 @@ var murL;
 var CoinG;
 var CoinD;
 
-var blocDangereux;
+// var evenements //
+var murDestructible;
+var plateformeOuverturePorte;
+var plateformeVictoire;
+var plateformePiece;
+var possedeClef = false;
+var possede3Pieces = false;
+var gameOver = false;
+var ecranVictoire;
+var ecranDefaite;
 
 //var collectibles // 
 var coeurCollectible;
 var itemTir;
 var itemDash;
-var keys;
+var itemclef;
+var itempiece;
+
 
 // var player //
 var player;
+var clef = 0;
+var piece = 0;
+var pdv=3;
+
 
 //var HUD //
 var PDV0;
 var PDV1;
 var PDV2;
 var PDV3;
+
 var imageShotTrue;
-var imageShotFalse;
 var imageDashTrue;
-var imageDashFalse;
+
+var x0C;
+var x1C;
+var x2C;
+var x3C;
+
+var x0P;
+var x1P;
+var x2P;
+var x3P;
+
+var affichagePiece;
+var affichageClef;
+
 
 // var ennemis //
 var ennemi;
 var pdvEnnemi = 3;
+
+var blocDangereux;
 var tir;
 var tir2;
 var tir3;
-var gameOver = false;
-var pdv=3; 
+
 var kill1;
 var kill2;
 var kill3;
 var kill4;
-var kill5;
-var kill6;
 
 var scie;
 var scie2;
@@ -63,38 +97,13 @@ var compteurFramesEnnemi = 75;
 var invincibleEnnemi = false;
 
 
-var murDestructible;
-var plateformeOuverturePorte;
-var plateformeVictoire;
-var plateformePiece;
-var clef = 0;
-var itemclef;
-var possedeClef = false;
-
-var piece = 0;
-var itempiece;
-var affichagePiece;
-var affichageClef;
-var possede3Pieces = false;
-var x0C;
-var x1C;
-var x2C;
-var x3C;
-
-var x0P;
-var x1P;
-var x2P;
-var x3P;
-
-var ecranVictoire;
-var ecranDefaite;
-
-
+// var controles claviers //
+var keys;
 
 class SceneOne extends Phaser.Scene{
     constructor(){
         super("SceneOne");
-       // this.pad = null;
+       
     }
     init(data){
     }
@@ -117,15 +126,15 @@ class SceneOne extends Phaser.Scene{
         
         
         // HUD //
-        this.load.image('pdv','assets/coeur.png');
+        
         this.load.image('pdv0','assets/Tete0PV.png');
         this.load.image('pdv1','assets/Tete1PV.png');
         this.load.image('pdv2','assets/Tete2PV.png');
         this.load.image('pdv3','assets/Tete3PV.png');
         this.load.image('dashTrue','assets/DashTrue.png');
-        this.load.image('dashFalse','assets/DashFalse.png');
+       
         this.load.image('shotTrue','assets/ShotTrue.png');
-        this.load.image('shotFalse','assets/ShotFalse.png');
+    
         this.load.image('x0','assets/x0.png');
         this.load.image('x1','assets/x1.png');
         this.load.image('x1','assets/x2.png');
@@ -135,6 +144,7 @@ class SceneOne extends Phaser.Scene{
         this.load.image('defeat','assets/EcranGameOver.png');
         
         // Collectibles
+		this.load.image('pdv','assets/coeur.png');
         this.load.image('itemTir','assets/itemTir.png');
         this.load.image('itemDash','assets/itemDash.png');
         this.load.image('clef','assets/clef.png');
@@ -155,27 +165,35 @@ class SceneOne extends Phaser.Scene{
     
     create(){
         
+		// Caméra //
         this.cameras.main.setBounds(0, 0, 1950, 1500);
         this.physics.world.setBounds(0, 0, 1950, 1500);
         
+		//Background //
         this.add.image(0, 0, 'background').setOrigin(0);        
         
-        coeurCollectible= this.physics.add.staticGroup();
+		// Groupes collectibles//
+		coeurCollectible= this.physics.add.staticGroup();
+ 		itemTir = this.physics.add.staticGroup();
+		itemDash = this.physics.add.staticGroup();
+		itemclef = this.physics.add.staticGroup();
+        itempiece = this.physics.add.staticGroup();
+        
+		// Groupes Décors //
         mur = this.physics.add.staticGroup();
         blocDangereux = this.physics.add.staticGroup();
-        
         passage = this.physics.add.staticGroup();
         trouH = this.physics.add.staticGroup();
         trouV = this.physics.add.staticGroup();
-        itemTir = this.physics.add.staticGroup();
-        itemDash = this.physics.add.staticGroup();
-        ennemi = this.physics.add.group();
-        plateformeOuverturePorte = this.physics.add.staticGroup();
+       	plateformeOuverturePorte = this.physics.add.staticGroup();
         
-        itemclef = this.physics.add.staticGroup();
-        itempiece = this.physics.add.staticGroup();
+		// Groupe ennemi //
+        ennemi = this.physics.add.group();
+        
+        
+        
     
-        // murs haut
+        // murs haut //
         
         mur.create(225,150, 'Mur');
         mur.create(375,150, 'Mur');
@@ -189,7 +207,7 @@ class SceneOne extends Phaser.Scene{
         mur.create(1575,150, 'Mur');
         mur.create(1725,150, 'Mur');
         
-        // murs bas
+        // murs bas //
         mur.create(225,1350, 'Mur');
         mur.create(375,1350, 'Mur');
         mur.create(525,1350, 'Mur');
@@ -215,22 +233,96 @@ class SceneOne extends Phaser.Scene{
         mur.create(75,750, 'MurL');
         mur.create(75,1050, 'MurL');
         mur.create(75,1350, 'CoinD');
-        
-        
-        
-        blocDangereux.create(1725,370, 'blocDangereux');  
-
-        passage.create(225,1075, 'passage');
-        itemTir.create(1725,750, 'itemTir');
-    
-        //coeurCollectible.create (500, 400, 'pdv');
-        
-       trouH.create(450,705, 'trouH');
-       trouH.create(1050,705, 'trouH');
-       trouH.create(1500,740, 'trouH').setScale(0.5).setSize(300,75).setOffset(150,37.5);
-       trouV.create(712,625, 'trouV').setScale(0.5).setSize(75,300).setOffset(37.5,150);
-        
+		
+		// Collectibles //
         coeurCollectible = this.physics.add.sprite(ennemi.x, ennemi.y, 'pdv').setAlpha(0);
+        itemTir.create(1725,750, 'itemTir');
+		
+		
+        // Ennemi & Tir ennemi
+        blocDangereux.create(1725,370, 'blocDangereux');  
+		
+		tir = this.physics.add.image(1725 , 385, 'tir');
+        tir.setCollideWorldBounds(true);
+        tir.body.setAllowGravity(false);
+		
+		ennemi = this.physics.add.image(448 , 1033, 'ennemi1');
+        ennemi.setCollideWorldBounds(true);
+        ennemi.body.setAllowGravity(false); 
+		
+		// Passage vers scene 2 //
+        passage.create(225,1075, 'passage');
+       
+    
+     
+       // Obstacles vide //
+       	trouH.create(450,705, 'trouH');
+       	trouH.create(1050,705, 'trouH');
+       	trouH.create(1500,740, 'trouH').setScale(0.5).setSize(300,75).setOffset(150,37.5);
+       	trouV.create(712,625, 'trouV').setScale(0.5).setSize(75,300).setOffset(37.5,150);
+		
+        
+       
+		
+		
+        
+        
+		// Création du Joueur //
+        player = this.physics.add.sprite(400, 450, 'dude').setAlpha(1);
+		
+        this.cameras.main.startFollow(player, true);
+        player.setCollideWorldBounds(true);
+		
+		// Colliders, overlaps et fonctions //
+        this.physics.add.collider(player, mur);
+        this.physics.add.collider(player, trouH);
+        this.physics.add.collider(player, trouV);
+        this.physics.add.collider(player, blocDangereux);
+        this.physics.add.collider(player,passage, changementZone, null, this);
+        this.physics.add.collider(player,itemTir, recupTir, null, this);
+        this.physics.add.overlap(player,coeurCollectible, Soin, null, this);  
+        this.physics.add.collider(player,itemclef, recupClef, null, this);
+        this.physics.add.collider(player, murDestructible);
+        this.physics.add.overlap(player, plateformeOuverturePorte, OuvrePorte, null, this);
+        this.physics.add.overlap(player, tir, HitTir, null, this);
+     
+        
+       	
+       
+        
+        
+        
+  	// Tween du tir //
+        this.tweens.add({
+            targets: tir,
+                props: {
+                y: { value: 900, duration: 1000 },
+            },
+            yoyo: false,
+                repeat: -1
+        });
+		
+	// Tween de l'ennemi //
+        
+        this.tweens.add({
+            targets: ennemi,
+                props: {
+                x: { value: 733, duration: 500 },
+            },
+            yoyo: true,
+            flipX:true,
+                repeat: -1
+        });
+     
+	// Tir du joueur //
+   	tirJoueur = this.physics.add.group();
+  
+    this.physics.add.overlap(tirJoueur, ennemi, degatEnnemi, null, this);    
+   
+		// HUD //   
+    	ecranDefaite = this.add.sprite(960,540, 'defeat').setScrollFactor(0).setAlpha(0);
+		ecranVictoire = this.add.sprite(960,540, 'victory').setScrollFactor(0).setAlpha(0);
+	 
         PDV0 = this.add.sprite(300,100, 'pdv0').setScrollFactor(0).setAlpha(0);   
         PDV1 = this.add.sprite(300,100, 'pdv1').setScrollFactor(0).setAlpha(0);   
         PDV2 = this.add.sprite(300,100, 'pdv2').setScrollFactor(0).setAlpha(0);   
@@ -248,75 +340,13 @@ class SceneOne extends Phaser.Scene{
         affichageClef = this.add.sprite(400,100, 'clef').setScrollFactor(0).setAlpha(1);
         affichagePiece = this.add.sprite(600,100, 'piece').setScrollFactor(0).setAlpha(1);
         
-        imageDashFalse = this.add.sprite(1730,100, 'dashFalse').setScrollFactor(0).setAlpha(1);
+  
         imageDashTrue = this.add.sprite(1730,100, 'dashTrue').setScrollFactor(0).setAlpha(0);
-        imageShotFalse = this.add.sprite(1500,100, 'shotFalse').setScrollFactor(0).setAlpha(1);
+      
         imageShotTrue = this.add.sprite(1500,100, 'shotTrue').setScrollFactor(0).setAlpha(0);
-		
-		
-        
-        
-
-        player = this.physics.add.sprite(400, 450, 'dude').setAlpha(1);
-        this.cameras.main.startFollow(player, true);
-
-        player.setCollideWorldBounds(true);
-        this.physics.add.collider(player, mur);
-        this.physics.add.collider(player, trouH);
-        this.physics.add.collider(player, trouV);
-        this.physics.add.collider(player, blocDangereux);
-        this.physics.add.collider(player,passage, changementZone, null, this);
-        this.physics.add.collider(player,itemTir, recupTir, null, this);
-        this.physics.add.overlap(player,coeurCollectible, Soin, null, this);  
-        this.physics.add.collider(player,itemclef, recupClef, null, this);
-        this.physics.add.collider(player, murDestructible);
-        this.physics.add.overlap(player, plateformeOuverturePorte, OuvrePorte, null, this);
-        
-        
-       
-       
-        
-        tir = this.physics.add.image(1725 , 385, 'tir');
-        tir.setCollideWorldBounds(true);
-        tir.body.setAllowGravity(false);
-        this.physics.add.overlap(player, tir, HitTir, null, this);
-        
-        ennemi = this.physics.add.image(448 , 1033, 'ennemi1');
-        ennemi.setCollideWorldBounds(true);
-        ennemi.body.setAllowGravity(false); 
-       
-  
- 
-    
-    // Création du twins (asset ennemi utilisé par le twins) //
-        this.tweens.add({
-            targets: tir,
-                props: {
-                y: { value: 900, duration: 1000 },
-            },
-            yoyo: false,
-                repeat: -1
-        });
-        
-        this.tweens.add({
-            targets: ennemi,
-                props: {
-                x: { value: 733, duration: 500 },
-            },
-            yoyo: true,
-            flipX:true,
-                repeat: -1
-        });
-        
-   
-  
-    tirJoueur = this.physics.add.group();    
-    this.physics.add.overlap(tirJoueur,ennemi, degatEnnemi, null, this);    
-    this.physics.add.overlap(player,ennemi, HitTir, null, this);    
-        
-    
-
          
+		
+		// Annimations du joueur //
         this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 1 }),
@@ -353,7 +383,7 @@ class SceneOne extends Phaser.Scene{
         repeat: -1
         });
         
-        
+        // Controles //
          keys = this.input.keyboard.addKeys({
 
             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
@@ -374,7 +404,7 @@ class SceneOne extends Phaser.Scene{
         
         
             
-    
+    	// Fonction HitTir (je ne sais pas ce qu'elle fout là mais ça ne marchait pas autrement) //
          function HitTir(){ 
             if (invincible == false){
                 invincible = true;
@@ -410,9 +440,8 @@ class SceneOne extends Phaser.Scene{
 
 
         }
-        ecranDefaite = this.add.sprite(960,540, 'defeat').setScrollFactor(0).setAlpha(0);
-		ecranVictoire = this.add.sprite(960,540, 'victory').setScrollFactor(0).setAlpha(0);
-			 
+        
+		// Fonction changement de zone //	 
         function changementZone(){
             this.scene.start("SceneTwo"); 
          }
@@ -423,7 +452,7 @@ class SceneOne extends Phaser.Scene{
     update(){
         
         
-        
+        // Fonction game over //
             
             if (gameOver){
                 
@@ -442,7 +471,9 @@ class SceneOne extends Phaser.Scene{
                 this.scene.start("SceneOne"/*, {pdv: this.pdv}*/);}
              	
             }
-               
+		
+		
+            // Controles et animations du personnage (touches directionelles, espace et shift)  // 
             if (keys.right.isUp && keys.left.isUp && keys.up.isUp && keys.down.isUp){
                 player.setVelocityY(0);
                 player.anims.play('turn', true);
@@ -563,7 +594,7 @@ class SceneOne extends Phaser.Scene{
             setTimeout(function (){canDash = true}, 1000);
           
         }
-        
+        // Affichage pv perso //
        if (pdv == 3){
             PDV3.setAlpha(1);
             PDV2.setAlpha(0);
@@ -591,6 +622,7 @@ class SceneOne extends Phaser.Scene{
             gameOver = true;
         }
         
+		// Affichage piece //
         if (piece == 0){
             x0P.setAlpha(1);
             x1P.setAlpha(0);
@@ -620,6 +652,7 @@ class SceneOne extends Phaser.Scene{
        
         }
         
+		//Affichage clefs //
          if (clef == 0){
             x0C.setAlpha(1);
             x1C.setAlpha(0);
@@ -648,12 +681,15 @@ class SceneOne extends Phaser.Scene{
             x3C.setAlpha(1);
    
         }
-         
+        
+		//Affichage du tir //
         if (canShot == true){
-            imageShotFalse.setAlpha(0);
+      
             imageShotTrue.setAlpha(1);
         }
         
+		
+		// Invulnérabilité du joueur et de l'ennemi //
         if(invincible == true){
             
             compteurInvincible-- ;
@@ -721,11 +757,13 @@ class SceneOne extends Phaser.Scene{
        
     }
 }
-    
+  
+// Fonction pour ramasser un coeur et se soigner //
  function Soin(player, coeurCollectible){
-            console.log("ah");
+          
             pdv +=1;
             coeurCollectible.destroy()
+			
             if (pdv == 3){
             PDV3.setAlpha(1);
             PDV2.setAlpha(0);
@@ -754,16 +792,16 @@ class SceneOne extends Phaser.Scene{
         }
             }
      
-            function degatEnnemi(tirJoueur, Ennemi){
-            if (invincibleEnnemi == false){
-                invincibleEnnemi = true;
-                pdvEnnemi -=1;   
-            
-            if (pdvEnnemi <=0){
-                ennemi.destroy();
-                coeurCollectible.setAlpha(1);
-                coeurCollectible.setX(ennemi.x);
-                coeurCollectible.setY(ennemi.y);
+       function degatEnnemi(tirJoueur, Ennemi){
+       if (invincibleEnnemi == false){
+           invincibleEnnemi = true;
+           pdvEnnemi -=1;   
+       
+       if (pdvEnnemi <=0){
+           ennemi.destroy();
+           coeurCollectible.setAlpha(1);
+           coeurCollectible.setX(ennemi.x);
+           coeurCollectible.setY(ennemi.y);
                 
         }
                 
@@ -771,13 +809,15 @@ class SceneOne extends Phaser.Scene{
     
         }
             }
-        
+    
+// Fonction du tir du joueur //
     function attaque(x, y){
 
     newTirJoueur = tirJoueur.create(player.x + x, player.y + y, 'tir');
 
     }
 
+// Fonctions de ramassages de collectibles & Evenements //
    function AchatPowerUp(player, plateformePiece){
         if (possede3Pieces == true){
            itemDash.create (600,400, 'itemDash');
