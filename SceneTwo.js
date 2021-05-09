@@ -1,22 +1,3 @@
-/*var sol;
-var trouH;
-var trouV;
-var passage;
-var mur;
-var obstacle;
-var player;
-var cursors;
-var blocDangereux;
-var tir;
-var gameOver = false;
-   
-var PDV1;
-var PDV2;
-var PDV3;
-var compteurInvincible = 150;
-var compteurFrames = 150;
-var invincible = false;
-var tirJoueur; */
 
 
 
@@ -149,9 +130,7 @@ class SceneTwo extends Phaser.Scene{
         trouH.create(900,800,'trouH');
         //obstacle.create(600,600, 'obstacle1');  
         
-        //blocDangereux.create(900,400, 'blocDangereux');  
 
-        // passage.create(1725,1075, 'passage');
         
         itemclef.create(1700, 400, 'clef');
         
@@ -228,9 +207,7 @@ class SceneTwo extends Phaser.Scene{
         tir3.body.setAllowGravity(false);
         this.physics.add.overlap(player, tir3, HitTir, null, this);
         
-       // ennemi = this.physics.add.image(448 , 1033, 'ennemi1');
-        //ennemi.setCollideWorldBounds(true);
-        //ennemi.body.setAllowGravity(false); 
+
         
         
           this.tweens.add({

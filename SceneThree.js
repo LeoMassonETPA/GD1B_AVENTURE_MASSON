@@ -1,23 +1,3 @@
-/*var sol;
-var trouH;
-var trouV;
-var passage;
-var mur;
-var obstacle;
-var player;
-var cursors;
-var blocDangereux;
-var tir;
-var gameOver = false;
-   
-var PDV1;
-var PDV2;
-var PDV3;
-var compteurInvincible = 150;
-var compteurFrames = 150;
-var invincible = false;
-var tirJoueur; */
-
 
 
 
