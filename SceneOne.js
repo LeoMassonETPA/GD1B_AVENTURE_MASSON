@@ -218,9 +218,9 @@ class SceneOne extends Phaser.Scene{
     
         //coeurCollectible.create (500, 400, 'pdv');
         
-       trouH.create(450,700, 'trouH');
-       trouH.create(1050,700, 'trouH');
-       trouH.create(1500,737.5, 'trouH').setScale(0.5).setSize(300,75).setOffset(150,37.5);
+       trouH.create(450,705, 'trouH');
+       trouH.create(1050,705, 'trouH');
+       trouH.create(1500,740, 'trouH').setScale(0.5).setSize(300,75).setOffset(150,37.5);
        trouV.create(712,625, 'trouV').setScale(0.5).setSize(75,300).setOffset(37.5,150);
         
         coeurCollectible = this.physics.add.sprite(ennemi.x, ennemi.y, 'pdv').setAlpha(0);
