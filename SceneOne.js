@@ -4,6 +4,9 @@ var trouH;
 var trouV;
 var passage;
 var mur;
+var murL;
+var CoinG;
+var CoinD;
 
 var blocDangereux;
 
@@ -17,6 +20,7 @@ var keys;
 var player;
 
 //var HUD //
+var PDV0;
 var PDV1;
 var PDV2;
 var PDV3;
@@ -101,6 +105,9 @@ class SceneOne extends Phaser.Scene{
         this.load.image('trouH','assets/TrouH.png');
         this.load.image('trouV','assets/trouV.png');
         this.load.image('Mur','assets/Mur.png');
+        this.load.image('MurL','assets/Mur2.png');
+        this.load.image('CoinG','assets/CoinHautGauche.png');
+        this.load.image('CoinD','assets/CoinHautDroit.png');
         this.load.image('passage','assets/passage.png');
         this.load.image('blocDangereux','assets/ObstacleD.png');
         this.load.image('plateformeOuverturePorte','assets/plateforme.png');
@@ -111,6 +118,10 @@ class SceneOne extends Phaser.Scene{
         
         // HUD //
         this.load.image('pdv','assets/coeur.png');
+        this.load.image('pdv0','assets/Tete0PV.png');
+        this.load.image('pdv1','assets/Tete1PV.png');
+        this.load.image('pdv2','assets/Tete2PV.png');
+        this.load.image('pdv3','assets/Tete3PV.png');
         this.load.image('dashTrue','assets/DashTrue.png');
         this.load.image('dashFalse','assets/DashFalse.png');
         this.load.image('shotTrue','assets/ShotTrue.png');
@@ -191,19 +202,19 @@ class SceneOne extends Phaser.Scene{
         mur.create(1575,1350, 'Mur');
         mur.create(1725,1350, 'Mur');
         
-        // murs gauche
-        mur.create(1875,150, 'Mur');
-        mur.create(1875,450, 'Mur');
-        mur.create(1875,750, 'Mur');
-        mur.create(1875,1050, 'Mur');
-        mur.create(1875,1350, 'Mur');
+        // murs droit
+        mur.create(1875,150, 'CoinD');
+        mur.create(1875,450, 'MurL');
+        mur.create(1875,750, 'MurL');
+        mur.create(1875,1050, 'MurL');
+        mur.create(1875,1350, 'CoinG');
         
-        // murs droite
-        mur.create(75,150, 'Mur');
-        mur.create(75,450, 'Mur');
-        mur.create(75,750, 'Mur');
-        mur.create(75,1050, 'Mur');
-        mur.create(75,1350, 'Mur');
+        // murs gauche
+        mur.create(75,150, 'CoinG');
+        mur.create(75,450, 'MurL');
+        mur.create(75,750, 'MurL');
+        mur.create(75,1050, 'MurL');
+        mur.create(75,1350, 'CoinD');
         
         
         
@@ -220,9 +231,10 @@ class SceneOne extends Phaser.Scene{
        trouV.create(712,625, 'trouV').setScale(0.5).setSize(75,300).setOffset(37.5,150);
         
         coeurCollectible = this.physics.add.sprite(ennemi.x, ennemi.y, 'pdv').setAlpha(0);
-        PDV1 = this.add.sprite(100,100, 'pdv').setScrollFactor(0).setAlpha(1);   
-        PDV2 = this.add.sprite(200,100, 'pdv').setScrollFactor(0).setAlpha(1);   
-        PDV3 = this.add.sprite(300,100, 'pdv').setScrollFactor(0).setAlpha(1);   
+        PDV0 = this.add.sprite(300,100, 'pdv0').setScrollFactor(0).setAlpha(0);   
+        PDV1 = this.add.sprite(300,100, 'pdv1').setScrollFactor(0).setAlpha(0);   
+        PDV2 = this.add.sprite(300,100, 'pdv2').setScrollFactor(0).setAlpha(0);   
+        PDV3 = this.add.sprite(300,100, 'pdv3').setScrollFactor(0).setAlpha(0);   
         
         x0C = this.add.sprite(500,100, 'x0').setScrollFactor(0).setAlpha(1);
         x1C = this.add.sprite(500,100, 'x1').setScrollFactor(0).setAlpha(0);
@@ -369,24 +381,28 @@ class SceneOne extends Phaser.Scene{
                 pdv -=1;   
         if (pdv == 3){
             PDV3.setAlpha(1);
-            PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
-       }
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
         if (pdv == 2){
             PDV3.setAlpha(0);
             PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
         if (pdv == 1){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
         if (pdv == 0){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
             gameOver = true;
         }
             }
@@ -396,6 +412,7 @@ class SceneOne extends Phaser.Scene{
         }
         ecranDefaite = this.add.sprite(960,540, 'defeat').setScrollFactor(0).setAlpha(0);
 		ecranVictoire = this.add.sprite(960,540, 'victory').setScrollFactor(0).setAlpha(0);
+			 
         function changementZone(){
             this.scene.start("SceneTwo"); 
          }
@@ -549,24 +566,28 @@ class SceneOne extends Phaser.Scene{
         
        if (pdv == 3){
             PDV3.setAlpha(1);
-            PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
-       }
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+	   }
                 
         if (pdv == 2){
             PDV3.setAlpha(0);
             PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
         if (pdv == 1){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
         if (pdv == 0){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
             gameOver = true;
         }
         
@@ -706,26 +727,30 @@ class SceneOne extends Phaser.Scene{
             pdv +=1;
             coeurCollectible.destroy()
             if (pdv == 3){
-                PDV3.setAlpha(1);
-                PDV2.setAlpha(1);
-                PDV1.setAlpha(1);
-       }
+            PDV3.setAlpha(1);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+			}
                 
-            if (pdv == 2){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(1);
-                PDV1.setAlpha(1);
+        if (pdv == 2){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
-            if (pdv == 1){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(0);
-                PDV1.setAlpha(1);
+        if (pdv == 1){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
-            if (pdv == 0){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(0);
-                PDV1.setAlpha(0);
-                gameOver = true;
+        if (pdv == 0){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
+            gameOver = true;
         }
             }
      

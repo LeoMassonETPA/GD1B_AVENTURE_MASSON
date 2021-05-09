@@ -18,6 +18,9 @@ class SceneTwo extends Phaser.Scene{
         this.load.image('trouH','assets/trouH.png');
         this.load.image('trouV','assets/trouV.png');
         this.load.image('Mur','assets/Mur.png');
+		this.load.image('MurL','assets/Mur2.png');
+        this.load.image('CoinG','assets/CoinHautGauche.png');
+        this.load.image('CoinD','assets/CoinHautDroit.png');
         this.load.image('passage','assets/passage.png');
         this.load.image('blocDangereux','assets/ObstacleD.png');
         this.load.image('plateformeOuverturePorte','assets/plateforme.png');
@@ -26,6 +29,10 @@ class SceneTwo extends Phaser.Scene{
         
         // HUD //
         this.load.image('pdv','assets/coeur.png');
+		this.load.image('pdv0','assets/Tete0PV.png');
+        this.load.image('pdv1','assets/Tete1PV.png');
+        this.load.image('pdv2','assets/Tete2PV.png');
+        this.load.image('pdv3','assets/Tete3PV.png');
         this.load.image('x0','assets/x0.png');
         this.load.image('x1','assets/x1.png');
         this.load.image('x2','assets/x2.png');
@@ -107,19 +114,18 @@ class SceneTwo extends Phaser.Scene{
         mur.create(1575,1350, 'Mur');
         mur.create(1725,1350, 'Mur');
         
-        // murs gauche
-        mur.create(1875,150, 'Mur');
-        mur.create(1875,450, 'Mur');
-        mur.create(1875,750, 'Mur');
-        mur.create(1875,1050, 'Mur');
-        mur.create(1875,1350, 'Mur');
+         mur.create(1875,150, 'CoinD');
+        mur.create(1875,450, 'MurL');
+        mur.create(1875,750, 'MurL');
+        mur.create(1875,1050, 'MurL');
+        mur.create(1875,1350, 'CoinG');
         
-        // murs droite
-        mur.create(75,150, 'Mur');
-        mur.create(75,450, 'Mur');
-        mur.create(75,750, 'Mur');
-        mur.create(75,1050, 'Mur');
-        mur.create(75,1350, 'Mur');
+        // murs gauche
+        mur.create(75,150, 'CoinG');
+        mur.create(75,450, 'MurL');
+        mur.create(75,750, 'MurL');
+        mur.create(75,1050, 'MurL');
+        mur.create(75,1350, 'CoinD');
         
         
         trouH.create(1500,800,'trouH');
@@ -143,9 +149,10 @@ class SceneTwo extends Phaser.Scene{
        // trouH.create(500,1200, 'trouH');
        // trouV.create(500,700, 'trouV');
         
-        PDV1 = this.add.sprite(100,100, 'pdv').setScrollFactor(0).setAlpha(1);   
-        PDV2 = this.add.sprite(200,100, 'pdv').setScrollFactor(0).setAlpha(1);   
-        PDV3 = this.add.sprite(300,100, 'pdv').setScrollFactor(0).setAlpha(1);   
+         PDV0 = this.add.sprite(300,100, 'pdv0').setScrollFactor(0).setAlpha(0);   
+        PDV1 = this.add.sprite(300,100, 'pdv1').setScrollFactor(0).setAlpha(0);   
+        PDV2 = this.add.sprite(300,100, 'pdv2').setScrollFactor(0).setAlpha(0);   
+        PDV3 = this.add.sprite(300,100, 'pdv3').setScrollFactor(0).setAlpha(0);  
         
         x0C = this.add.sprite(500,100, 'x0').setScrollFactor(0).setAlpha(1);
         x1C = this.add.sprite(500,100, 'x1').setScrollFactor(0).setAlpha(0);
@@ -326,24 +333,28 @@ class SceneTwo extends Phaser.Scene{
                 pdv -=1;   
         if (pdv == 3){
             PDV3.setAlpha(1);
-            PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
-       }
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
         if (pdv == 2){
             PDV3.setAlpha(0);
             PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
         if (pdv == 1){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
         if (pdv == 0){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
             gameOver = true;
         }
             }
@@ -471,24 +482,28 @@ class SceneTwo extends Phaser.Scene{
       
        if (pdv == 3){
             PDV3.setAlpha(1);
-            PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
-       }
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
         if (pdv == 2){
             PDV3.setAlpha(0);
             PDV2.setAlpha(1);
-            PDV1.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
         if (pdv == 1){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
         if (pdv == 0){
             PDV3.setAlpha(0);
             PDV2.setAlpha(0);
             PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
             gameOver = true;
         }
         
@@ -628,26 +643,30 @@ class SceneTwo extends Phaser.Scene{
             pdv +=1;
             coeurCollectible.destroy()
             if (pdv == 3){
-                PDV3.setAlpha(1);
-                PDV2.setAlpha(1);
-                PDV1.setAlpha(1);
-       }
+            PDV3.setAlpha(1);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
+		}
                 
-            if (pdv == 2){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(1);
-                PDV1.setAlpha(1);
+        if (pdv == 2){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(1);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(0);
         }
-            if (pdv == 1){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(0);
-                PDV1.setAlpha(1);
+        if (pdv == 1){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(1);
+            PDV0.setAlpha(0);
         }
-            if (pdv == 0){
-                PDV3.setAlpha(0);
-                PDV2.setAlpha(0);
-                PDV1.setAlpha(0);
-                gameOver = true;
+        if (pdv == 0){
+            PDV3.setAlpha(0);
+            PDV2.setAlpha(0);
+            PDV1.setAlpha(0);
+            PDV0.setAlpha(1);
+            gameOver = true;
         }
             }
      
