@@ -18,9 +18,7 @@ class SceneTwo extends Phaser.Scene{
         this.load.image('trouH','assets/trouH.png');
         this.load.image('trouV','assets/trouV.png');
         this.load.image('Mur','assets/Mur.png');
-        this.load.image('Sol','assets/Sol.png');
         this.load.image('passage','assets/passage.png');
-        this.load.image('obstacle1','assets/obstacle1.png');
         this.load.image('blocDangereux','assets/ObstacleD.png');
         this.load.image('plateformeOuverturePorte','assets/plateforme.png');
         
@@ -74,9 +72,7 @@ class SceneTwo extends Phaser.Scene{
         mur = this.physics.add.staticGroup();
         coeurCollectible= this.physics.add.staticGroup();
         blocDangereux = this.physics.add.staticGroup();
-        sol = this.physics.add.staticGroup();
         passage = this.physics.add.staticGroup();
-        obstacle = this.physics.add.staticGroup();
         trouH = this.physics.add.staticGroup();
         trouV = this.physics.add.staticGroup();
         itemTir = this.physics.add.staticGroup();
@@ -128,7 +124,6 @@ class SceneTwo extends Phaser.Scene{
         
         trouH.create(1500,800,'trouH');
         trouH.create(900,800,'trouH');
-        //obstacle.create(600,600, 'obstacle1');  
         
 
         
@@ -181,8 +176,6 @@ class SceneTwo extends Phaser.Scene{
         this.physics.add.collider(player, trouH);
         this.physics.add.collider(player, trouV);
         this.physics.add.collider(player, blocDangereux);
-        this.physics.add.collider(player, sol);
-        this.physics.add.collider(player, obstacle);
         this.physics.add.collider(player,passage, changementZone, null, this);
         this.physics.add.collider(player,coeurCollectible, Soin, null, this);
         this.physics.add.collider(player,itemclef, recupClef, null, this);

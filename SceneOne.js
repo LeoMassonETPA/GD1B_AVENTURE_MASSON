@@ -1,10 +1,10 @@
 // var décor //
-var sol;
+
 var trouH;
 var trouV;
 var passage;
 var mur;
-var obstacle;
+
 var blocDangereux;
 
 //var collectibles // 
@@ -101,9 +101,7 @@ class SceneOne extends Phaser.Scene{
         this.load.image('trouH','assets/TrouH.png');
         this.load.image('trouV','assets/trouV.png');
         this.load.image('Mur','assets/Mur.png');
-        this.load.image('Sol','assets/Sol.png');
         this.load.image('passage','assets/passage.png');
-        this.load.image('obstacle1','assets/obstacle1.png');
         this.load.image('blocDangereux','assets/ObstacleD.png');
         this.load.image('plateformeOuverturePorte','assets/plateforme.png');
         this.load.image('plateformePiece','assets/platformePiece.png');
@@ -155,9 +153,7 @@ class SceneOne extends Phaser.Scene{
         mur = this.physics.add.staticGroup();
         blocDangereux = this.physics.add.staticGroup();
         
-        sol = this.physics.add.staticGroup();
         passage = this.physics.add.staticGroup();
-        obstacle = this.physics.add.staticGroup();
         trouH = this.physics.add.staticGroup();
         trouV = this.physics.add.staticGroup();
         itemTir = this.physics.add.staticGroup();
@@ -209,7 +205,7 @@ class SceneOne extends Phaser.Scene{
         mur.create(75,1050, 'Mur');
         mur.create(75,1350, 'Mur');
         
-       // obstacle.create(600,600, 'obstacle1');  
+        
         
         blocDangereux.create(1725,370, 'blocDangereux');  
 
@@ -257,8 +253,6 @@ class SceneOne extends Phaser.Scene{
         this.physics.add.collider(player, trouH);
         this.physics.add.collider(player, trouV);
         this.physics.add.collider(player, blocDangereux);
-        this.physics.add.collider(player, sol);
-        this.physics.add.collider(player, obstacle);
         this.physics.add.collider(player,passage, changementZone, null, this);
         this.physics.add.collider(player,itemTir, recupTir, null, this);
         this.physics.add.overlap(player,coeurCollectible, Soin, null, this);  
